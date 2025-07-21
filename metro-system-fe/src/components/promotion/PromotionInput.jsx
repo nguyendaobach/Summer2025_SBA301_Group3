@@ -11,6 +11,8 @@ const PromotionInput = ({ ticketType,
     const [promotionCode, setPromotionCode] = useState(initialPromotionCode || '');
     const [isValid, setIsValid] = useState(true);
     const [showPromotions, setShowPromotions] = useState(false);
+    const [availablePromotions, setAvailablePromotions] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // Update local state when prop changes
     useEffect(() => {
@@ -24,12 +26,29 @@ const PromotionInput = ({ ticketType,
         }
     }, []); // Only run once on mount
 
-    // Mock data for available promotions
-    const availablePromotions = [
-        { code: 'SUMMER2024', discount: '20% off', description: 'Summer special discount' },
-        { code: 'WELCOME10', discount: '10% off', description: 'Welcome discount for new users' },
-        { code: 'WEEKEND15', discount: '15% off', description: 'Weekend special offer' }
-    ];
+    // Fetch promotions when component mounts or ticketType changes
+    useEffect(() => {
+        if (ticketType) {
+            fetchPromotions();
+        }
+    }, [ticketType]);
+
+    const fetchPromotions = async () => {
+        if (!ticketType) return;
+        
+        setLoading(true);
+        try {
+            const response = await axiosInstance.get(`/promotions/get?ticketTypeId=${ticketType}`);
+            if (response.status === 200 && response.data.data) {
+                setAvailablePromotions(response.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching promotions:', error);
+            setAvailablePromotions([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handlePromotionChange = (e) => {
         const value = e.target.value.toUpperCase();
@@ -68,24 +87,27 @@ const PromotionInput = ({ ticketType,
         applyPromotion(promotionCode);
     };
 
-    const handlePromotionSelect = (code) => {
-        setPromotionCode(code);
-        onPromotionCodeChange(code);
+    const handlePromotionSelect = (promotion) => {
+        if (promotion.status === 'INACTIVE') {
+            return; // Don't allow selection of inactive promotions
+        }
+        setPromotionCode(promotion.promotionCode);
+        onPromotionCodeChange(promotion.promotionCode);
         setIsValid(true);
-        applyPromotion(code);
+        applyPromotion(promotion.promotionCode);
     };
 
     return (
         <div className="promotion-input">
             <div className="promotion-wrapper">
                 <div className="promotion-header">
-                    <h3>Promotion Code</h3>
+                    <h3>Mã khuyến mãi</h3>
                 </div>
                 <div className="promotion-body">
                     <div className="input-group">
                         <Form.Control
                             type="text"
-                            placeholder="Enter promotion code"
+                            placeholder="Nhập mã khuyến mãi"
                             value={promotionCode}
                             onChange={handlePromotionChange}
                             className={!isValid ? 'is-invalid' : ''}
@@ -94,12 +116,12 @@ const PromotionInput = ({ ticketType,
                             className="apply-btn"
                             onClick={() => handleApply(promotionCode)}
                         >
-                            Apply
+                            Áp dụng
                         </button>
                     </div>
                     {!isValid && (
                         <div className="error-message">
-                            Please enter a valid promotion code
+                            Vui lòng nhập mã khuyến mãi hợp lệ
                         </div>
                     )}
 
@@ -108,25 +130,34 @@ const PromotionInput = ({ ticketType,
                             className="promotions-toggle"
                             onClick={() => setShowPromotions(!showPromotions)}
                         >
-                            <span>Available Promotions</span>
+                            <span>Mã khuyến mãi</span>
                             <i className={`fas fa-chevron-${showPromotions ? 'up' : 'down'}`}></i>
                         </div>
 
                         {showPromotions && (
                             <div className="promotions-list">
-                                {availablePromotions.map((promo, index) => (
-                                    <div
-                                        key={index}
-                                        className="promotion-item"
-                                        onClick={() => handlePromotionSelect(promo.code)}
-                                    >
-                                        <div className="promo-code">{promo.code}</div>
-                                        <div className="promo-details">
-                                            <div className="promo-discount">{promo.discount}</div>
-                                            <div className="promo-description">{promo.description}</div>
+                                {loading ? (
+                                    <div className="loading-message">Đang tải mã khuyến mãi...</div>
+                                ) : availablePromotions.length > 0 ? (
+                                    availablePromotions.map((promo, index) => (
+                                        <div
+                                            key={promo.promotionId}
+                                            className={`promotion-item ${promo.status === 'INACTIVE' ? 'inactive' : ''}`}
+                                            onClick={() => handlePromotionSelect(promo)}
+                                        >
+                                            <div className="promo-code">{promo.promotionCode}</div>
+                                            <div className="promo-details">
+                                                <div className="promo-discount">{promo.promotionDiscount}% off</div>
+                                                <div className="promo-description">{promo.promotionName}</div>
+                                                {promo.status === 'INACTIVE' && (
+                                                    <div className="promo-status inactive">Inactive</div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))
+                                ) : (
+                                    <div className="no-promotions">Không có mã khuyến mãi</div>
+                                )}
                             </div>
                         )}
                     </div>

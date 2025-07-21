@@ -19,7 +19,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/security/login', {
+      const response = await axios.post('https://summer2025-sba301-group3.onrender.com/api/v1/security/login', {
         email: email,
         password: password
       });
@@ -82,12 +82,12 @@ const Login = () => {
           <Col md={4} className="login-form-col">
             <Card className="login-card">
               <Card.Body>
-                <h2 className="mb-4">Login</h2>
+                <h2 className="mb-4">Đăng nhập</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Enter your E-mail *</Form.Label>
+                    <Form.Label>Nhập email *</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="example@email.com"
@@ -98,7 +98,7 @@ const Login = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Enter your password *</Form.Label>
+                    <Form.Label>Nhập mật khẩu *</Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="********"
@@ -115,26 +115,13 @@ const Login = () => {
                       id="remember-checkbox"
                     />
                     <Link to="/forgot-password" className="text-danger">
-                      Forget password?
+                      Quên mật khẩu?
                     </Link>
                   </div>                  <Button variant="danger" type="submit" className="w-100 mb-3" disabled={loading}>
-                    {loading ? 'Logging in...' : 'Login'}
+                    {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                   </Button>
 
-                  <Button
-                    variant="primary"
-                    className="w-100 mb-2 d-flex align-items-center justify-content-center"
-                  >
-                    <i className="fab fa-facebook-f me-2"></i> Login with Facebook
-                  </Button>
-
-                  <Button
-                    variant="danger"
-                    className="w-100 d-flex align-items-center justify-content-center"
-                    style={{ backgroundColor: '#dd4b39', borderColor: '#dd4b39' }}
-                  >
-                    <i className="fab fa-google-plus-g me-2"></i> Login with Google+
-                  </Button>
+                  
                 </Form>
               </Card.Body>
             </Card>
@@ -143,9 +130,9 @@ const Login = () => {
           {/* Right Side: Placeholder Text */}
           <Col md={8} className="login-text-col">
             <div className="login-text">
-              <h1>LOGIN NOTE</h1>
+              <h1>ĐĂNG NHẬP</h1>
               <p>
-                HCMC Metro) là hệ thống đường sắt đô thị đang xây dựng tại Thành phố Hồ Chí Minh. Dự án là sự kết hợp giữa metro, xe điện mặt đất (tramway) và tàu một ray (monorail).              </p>
+                Hệ thống đường sắt đô thị đang xây dựng tại Thành phố Hồ Chí Minh. Dự án là sự kết hợp giữa metro, xe điện mặt đất (tramway) và tàu một ray (monorail).              </p>
 
             </div>
           </Col>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
-import './TicketSearchTool.css'; // file CSS bổ sung
+import './ticketSearchTool.css'; // file CSS bổ sung
 import SingleTripForm from './SingleTripForm';
 import TravelPassForm from './TravelPassForm';
 

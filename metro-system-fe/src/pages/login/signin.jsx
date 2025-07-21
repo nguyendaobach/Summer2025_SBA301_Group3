@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState();
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -41,6 +41,7 @@ const SignUp = () => {
     try {
       // Only sending email to get OTP at this point
       const response = await axios.post(
+<<<<<<< HEAD
         `http://localhost:8080/api/v1/security/register?mail=${encodeURIComponent(email)}`,
         null,
         {
@@ -49,6 +50,16 @@ const SignUp = () => {
         }
       );
 
+=======
+         'https://summer2025-sba301-group3.onrender.com/api/v1/security/register',
+         JSON.stringify(email),
+         {
+           headers: { 'Content-Type': 'application/json' },
+           withCredentials: true
+         }
+       );
+      
+>>>>>>> 5ac96d937c32d2c49f9eb3c65b8f7a5d2e48fe2c
       if (response.data.status === 200) {
         setSuccess('OTP sent to your email. Please check and enter below.');
         setStep(2);
@@ -91,6 +102,7 @@ const SignUp = () => {
       };
 
       // Send verification request with OTP
+<<<<<<< HEAD
       const response = await axios.post(
         `http://localhost:8080/api/v1/security/verify?otp=${otp}`,
         signupData,
@@ -99,6 +111,16 @@ const SignUp = () => {
 
       if (response.data.status === 201 || response.data.status === 200) {
         setSuccess('Registration successful! You can now login with your account.');
+=======
+     const response = await axios.post(
+       `https://summer2025-sba301-group3.onrender.com/api/v1/security/verify?otp=${otp}`,
+       signupData,
+       { headers: { 'Content-Type': 'application/json' } }
+     );
+      
+      if (response.data.status === 200) {
+        setSuccess('Registration successful! Redirecting to login...');
+>>>>>>> 5ac96d937c32d2c49f9eb3c65b8f7a5d2e48fe2c
         setTimeout(() => {
           navigate('/login');
         }, 1500);
@@ -242,26 +264,9 @@ const SignUp = () => {
                   </Form>
                 )}
 
-                <div className="mt-3 text-center">
-                  <p>Or sign up with social media</p>
-                </div>
+                
 
-                <Button
-                  variant="primary"
-                  className="w-100 mb-2 d-flex align-items-center justify-content-center"
-                >
-                  <FaFacebookF className="me-2" />
-                  Sign up with Facebook
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="w-100 d-flex align-items-center justify-content-center"
-                  style={{ backgroundColor: '#dd4b39', borderColor: '#dd4b39' }}
-                >
-                  <FaGooglePlusG className="me-2" />
-                  Sign up with Google+
-                </Button>
+                
               </Card.Body>
             </Card>
           </Col>

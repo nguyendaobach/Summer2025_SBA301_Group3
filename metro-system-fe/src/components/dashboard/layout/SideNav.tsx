@@ -6,15 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const navItems = [
   { to: '', icon: <House className="me-2" />, label: 'Overview' },
-  { to: 'customers', icon: <People className="me-2" />, label: 'Customers' },
-  { to: 'promotions', icon: <Puzzle className="me-2" />, label: 'Promotions' },
-  { to: 'ticket-type', icon: <ExclamationTriangle className="me-2" />, label: 'Ticket Type' },
-  { to: 'stations', icon: <Gear className="me-2" />, label: 'Stations' },
-  { to: 'routes', icon: <Person className="me-2" />, label: 'Routes' },
-  { to: 'trains', icon: <Gear className="me-2" />, label: 'Trains' },
-  { to: 'account', icon: <ExclamationTriangle className="me-2" />, label: 'Account' },
-  { to: 'ticket-rule', icon: <ExclamationTriangle className="me-2" />, label: 'Ticket Rule' },
-
+  { to: 'customers', icon: <People className="me-2" />, label: 'Quản lí tài khoản' },
+  { to: 'stations', icon: <Gear className="me-2" />, label: 'Quản lí trạm' },
+  { to: 'routes', icon: <Person className="me-2" />, label: 'Quản lí tuyến đường' },
+  { to: 'ticket-rule', icon: <ExclamationTriangle className="me-2" />, label: 'Quản lí quy định vé' },
+  { to: 'trains', icon: <Gear className="me-2" />, label: 'Quản lí tàu' },
+  { to: 'promotions', icon: <Puzzle className="me-2" />, label: 'Quản lí khuyến mãi' },
+  { to: 'ticket-type', icon: <ExclamationTriangle className="me-2" />, label: 'Quản lí loại vé' },
 ];
 
 const SideNav = () => {

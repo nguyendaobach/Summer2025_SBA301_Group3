@@ -1,6 +1,6 @@
 import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import './TicketSearchTool.css';
+import './ticketSearchTool.css';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../config/axios';
 import { RouteService } from '../../services/routeService';

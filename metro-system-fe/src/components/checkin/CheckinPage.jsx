@@ -48,7 +48,7 @@ const CheckinPage = () => {
 
   const fetchTicket = async () => {
     const ticket = await getTicketById(ticketId);
-    console.log(ticket);
+    console.log("ticket checkin page:", ticket);
     setTicket(ticket);
   };
 
@@ -128,33 +128,63 @@ const CheckinPage = () => {
         <Col lg={5} md={12}>
           <div className="checkin-card">
             <h2 className="mb-4 text-center checkin-title">Check-in Vé</h2>
-            <div className="text-center checkin-ticket-info">
-              <div className="ticket-id"><strong>Mã vé:</strong> #{ticketId}</div>
-              <div className="ticket-status">
-                <strong>Trạng thái:</strong> 
+            <div className="ticket-info-card">
+              <div className="ticket-info-header">
+                <div className="ticket-id-badge">#{ticketId}</div>
                 <span className={`status-badge status-${ticket.ticketStatus === "EXPIRED" ? 'expired' : ticket.ticketStatus === "CANCELLED" ? 'cancelled' : (ticket.isCheckIn ? 'checked-in' : 'available')}`}>
                   {ticket.ticketStatus === "EXPIRED" ? 'Hết hạn' : ticket.ticketStatus === "CANCELLED" ? 'Đã hủy' : (ticket.isCheckIn ? 'Đã check-in' : 'Chưa check-in')}
                 </span>
               </div>
-              <div><strong>Ngày mua:</strong> {new Date(ticket.purchaseTime).toLocaleString()}</div>
-              <div><strong>Hành khách:</strong> {ticket.userName}</div>
-              <div><strong>Tuyến:</strong> {ticket.routeName}</div>
-              <div><strong>Loại vé:</strong> {ticket.ticketName}</div>
-              <div className="mb-3">
-                <Form.Label>Chọn ga</Form.Label>
-                <Form.Select
-                  value={selectedStationId}
-                  onChange={e => setSelectedStationId(e.target.value)}
-                  disabled={stations.length === 0}
-                >
-                  <option value="">Chọn ga...</option>
-                  {stations.map(station => (
-                    <option key={station.stationId} value={station.stationId}>
-                      {station.stationName}
-                    </option>
-                  ))}
-                </Form.Select>
+              
+              <div className="ticket-info-grid">
+                <div className="info-item">
+                  <div className="info-label">Ngày mua</div>
+                  <div className="info-value">{new Date(ticket.purchaseTime).toLocaleString()}</div>
+                </div>
+                
+                
+                {ticket.departureStation && (
+                  <div className="info-item">
+                    <div className="info-label">Ga đi</div>
+                    <div className="info-value">{ticket.departureStation}</div>
+                  </div>
+                )}
+                
+                {ticket.arrivalStation && (
+                  <div className="info-item">
+                    <div className="info-label">Ga đến</div>
+                    <div className="info-value">{ticket.arrivalStation}</div>
+                  </div>
+                )}
+                
+                {ticket.routeName && (
+                  <div className="info-item">
+                    <div className="info-label">Tuyến</div>
+                    <div className="info-value">{ticket.routeName}</div>
+                  </div>
+                )}
+                
+                <div className="info-item">
+                  <div className="info-label">Loại vé</div>
+                  <div className="info-value">{ticket.ticketName}</div>
+                </div>
               </div>
+            </div>
+            
+            <div className="station-select-container">
+              <Form.Label>Chọn ga</Form.Label>
+              <Form.Select
+                value={selectedStationId}
+                onChange={e => setSelectedStationId(e.target.value)}
+                disabled={stations.length === 0}
+              >
+                <option value="">Chọn ga...</option>
+                {stations.map(station => (
+                  <option key={station.stationId} value={station.stationId}>
+                    {station.stationName}
+                  </option>
+                ))}
+              </Form.Select>
             </div>
             {successMsg && <Alert variant="success">{successMsg}</Alert>}
             <div className="d-flex justify-content-center gap-4 checkin-btn-group">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Form, InputGroup, Button, Accordion, Row, Col, Spinner, Modal } from 'react-bootstrap';
 import { ArrowDownUp, Plus, Dash } from 'react-bootstrap-icons';
-import './TicketSearchTool.css';
+import './ticketSearchTool.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StationService from '../../services/stationService';
 import { TicketContext } from '../../pages/layout/TicketLayout';

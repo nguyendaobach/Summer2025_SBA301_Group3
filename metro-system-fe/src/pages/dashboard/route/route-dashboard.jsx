@@ -16,7 +16,7 @@ const AdminRouteManager = () => {
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState(null)
-  const [stations, setStations] = useState(availableStations) // Will be replaced by API call
+  const [stations, setStations] = useState([]) // Will be replaced by API call
   const [ticketRules, setTicketRules] = useState([]) // For dropdown selection
   const [useApiMode, setUseApiMode] = useState(true) // Toggle between API and local mode
 

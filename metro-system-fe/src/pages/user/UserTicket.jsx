@@ -82,6 +82,7 @@ export default function UserTickets() {
 
     const handleViewBookingDetails = (booking) => {
         setSelectedBooking(booking)
+        console.log(booking)
         setShowModal(true)
         setActiveTab("info")
     }

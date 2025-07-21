@@ -16,6 +16,10 @@ const PassengerPage = ({ layoutCurrentStep, onStepChange }) => {
   const [promotionCode, setPromotionCode] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  
+  // State để lưu trữ thông tin form khi chuyển step
+  const [savedPassengers, setSavedPassengers] = useState([]);
+  const [savedIsBuyingForSelf, setSavedIsBuyingForSelf] = useState(false);
 
   // Get user email from localStorage
   useEffect(() => {
@@ -37,6 +41,12 @@ const PassengerPage = ({ layoutCurrentStep, onStepChange }) => {
     setIsFormValid(isValid);
   };
 
+  // Lưu thông tin form khi chuyển step
+  const handlePassengerFormData = (passengerData, isBuyingForSelf) => {
+    setSavedPassengers(passengerData);
+    setSavedIsBuyingForSelf(isBuyingForSelf);
+  };
+
 
 
   const renderStep = () => {
@@ -47,6 +57,9 @@ const PassengerPage = ({ layoutCurrentStep, onStepChange }) => {
           onPassengerChange={handlePassengerChange}
           userEmail={userEmail}
           onValidationChange={handleFormValidChange}
+          savedPassengers={savedPassengers}
+          savedIsBuyingForSelf={savedIsBuyingForSelf}
+          onFormDataChange={handlePassengerFormData}
         />;
       case 2:
         return <PromotionInput
