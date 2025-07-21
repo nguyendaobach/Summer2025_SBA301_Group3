@@ -17,38 +17,38 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  
+
   // Validate password match
   const passwordsMatch = password === confirmPassword;
-    // Step 1: Collect user info and send email for OTP
+  // Step 1: Collect user info and send email for OTP
   const handleSendEmail = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-    
+
     // Validate inputs
     if (!email || !fullName || !password || !confirmPassword) {
       setError('All fields are required');
       return;
     }
-    
+
     if (!passwordsMatch) {
       setError('Passwords do not match');
       return;
     }
-    
+
     setLoading(true);
     try {
       // Only sending email to get OTP at this point
       const response = await axios.post(
-         'http://localhost:8080/api/v1/security/register',
-         JSON.stringify(email),
-         {
-           headers: { 'Content-Type': 'application/json' },
-           withCredentials: true
-         }
-       );
-      
+        `http://localhost:8080/api/v1/security/register?mail=${encodeURIComponent(email)}`,
+        null,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+
       if (response.data.status === 200) {
         setSuccess('OTP sent to your email. Please check and enter below.');
         setStep(2);
@@ -58,7 +58,11 @@ const SignUp = () => {
     } catch (err) {
       console.error('Error sending email:', err);
       if (err.response) {
-        setError(err.response.data?.data || 'Failed to send OTP. Please try again.');
+        // Make sure we're not trying to render an object
+        const errorMsg = typeof err.response.data === 'string'
+          ? err.response.data
+          : err.response.data?.message || err.response.data?.data || 'Failed to send OTP. Please try again.';
+        setError(errorMsg);
       } else {
         setError('Network error. Please check your connection.');
       }
@@ -66,18 +70,18 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-    // Step 2: Submit OTP for verification
+  // Step 2: Submit OTP for verification
   const handleSubmitRegistration = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-    
+
     // Validate OTP
     if (!otp) {
       setError('OTP is required');
       return;
     }
-    
+
     setLoading(true);
     try {
       const signupData = {
@@ -85,26 +89,30 @@ const SignUp = () => {
         password: password,
         fullName: fullName
       };
-      
+
       // Send verification request with OTP
-     const response = await axios.post(
-       `http://localhost:8080/api/v1/security/verify?otp=${otp}`,
-       signupData,
-       { headers: { 'Content-Type': 'application/json' } }
-     );
-      
-      if (response.data.status === 200) {
-        setSuccess('Registration successful! Redirecting to login...');
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/security/verify?otp=${otp}`,
+        signupData,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      if (response.data.status === 201 || response.data.status === 200) {
+        setSuccess('Registration successful! You can now login with your account.');
         setTimeout(() => {
           navigate('/login');
-        }, 2000);
+        }, 1500);
       } else {
-        setError(response.data.data || 'Registration failed. Please try again.');
+        setError(response.data.message || 'Registration failed. Please try again.');
       }
     } catch (err) {
       console.error('Registration error:', err);
       if (err.response) {
-        setError(err.response.data?.data || 'Registration failed. Please try again.');
+        // Make sure we're not trying to render an object
+        const errorMsg = typeof err.response.data === 'string'
+          ? err.response.data
+          : err.response.data?.message || 'Registration failed. Please try again.';
+        setError(errorMsg);
       } else {
         setError('Network error. Please check your connection.');
       }
@@ -112,7 +120,7 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="login-page">
       <Container fluid className="h-100">
@@ -122,10 +130,10 @@ const SignUp = () => {
             <Card className="login-card">
               <Card.Body>
                 <h2 className="mb-4">Sign up</h2>
-                
+
                 {error && <Alert variant="danger">{error}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
-                  {step === 1 ? (
+                {step === 1 ? (
                   <Form onSubmit={handleSendEmail}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Enter your E-mail *</Form.Label>
@@ -177,14 +185,14 @@ const SignUp = () => {
                         </Form.Control.Feedback>
                       )}
                     </Form.Group>
-                    
+
                     <Form.Text className="text-muted mb-3 d-block">
                       By signing up, you agree to our terms of use and privacy policy
                     </Form.Text>
-                    
-                    <Button 
-                      variant="danger" 
-                      type="submit" 
+
+                    <Button
+                      variant="danger"
+                      type="submit"
                       className="w-100 mb-3"
                       disabled={loading}
                     >
@@ -198,7 +206,7 @@ const SignUp = () => {
                       <p className="text-muted">Email: {email}</p>
                       <p className="text-muted">Name: {fullName}</p>
                     </div>
-                    
+
                     <Form.Group className="mb-3" controlId="formOtp">
                       <Form.Label>Enter OTP Code *</Form.Label>
                       <Form.Control
@@ -215,16 +223,16 @@ const SignUp = () => {
                     </Form.Group>
 
                     <div className="d-flex gap-2 mb-3">
-                      <Button 
-                        variant="outline-secondary" 
+                      <Button
+                        variant="outline-secondary"
                         onClick={() => setStep(1)}
                         className="w-25"
                       >
                         Back
                       </Button>
-                      <Button 
-                        variant="danger" 
-                        type="submit" 
+                      <Button
+                        variant="danger"
+                        type="submit"
                         className="w-75"
                         disabled={loading}
                       >
