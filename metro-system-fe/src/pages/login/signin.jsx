@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -39,6 +39,9 @@ const SignUp = () => {
 
     setLoading(true);
     try {
+      // Debug logging
+      console.log('Sending email for OTP:', email);
+
       // Only sending email to get OTP at this point
       const response = await axios.post(
         `https://summer2025-sba301-group3.onrender.com/api/v1/security/register?mail=${encodeURIComponent(email)}`,
@@ -48,6 +51,8 @@ const SignUp = () => {
           withCredentials: true
         }
       );
+
+      console.log('Response:', response.data);
 
       if (response.data.status === 200) {
         setSuccess('OTP sent to your email. Please check and enter below.');
@@ -90,12 +95,17 @@ const SignUp = () => {
         fullName: fullName
       };
 
+      console.log('Sending verification with OTP:', otp);
+      console.log('Signup data:', signupData);
+
       // Send verification request with OTP
       const response = await axios.post(
         `https://summer2025-sba301-group3.onrender.com/api/v1/security/verify?otp=${otp}`,
         signupData,
         { headers: { 'Content-Type': 'application/json' } }
       );
+
+      console.log('Verification response:', response.data);
 
       if (response.data.status === 201 || response.data.status === 200) {
         setSuccess('Registration successful! You can now login with your account.');
@@ -242,8 +252,26 @@ const SignUp = () => {
                   </Form>
                 )}
 
+                <div className="mt-3 text-center">
+                  <p>Or sign up with social media</p>
+                </div>
 
+                <Button
+                  variant="primary"
+                  className="w-100 mb-2 d-flex align-items-center justify-content-center"
+                >
+                  <FaFacebookF className="me-2" />
+                  Sign up with Facebook
+                </Button>
 
+                <Button
+                  variant="danger"
+                  className="w-100 d-flex align-items-center justify-content-center"
+                  style={{ backgroundColor: '#dd4b39', borderColor: '#dd4b39' }}
+                >
+                  <FaGooglePlusG className="me-2" />
+                  Sign up with Google+
+                </Button>
 
               </Card.Body>
             </Card>
