@@ -97,37 +97,37 @@ const AdminTrainManager = () => {
         try {
             // Validate required fields with backend constraints
             if (!editTrain.trainName?.trim()) {
-                alert("Train name is required");
+                alert("Tên tàu là bắt buộc");
                 return;
             }
 
             if (editTrain.trainName.trim().length < 2) {
-                alert("Train name must be at least 2 characters long");
+                alert("Tên tàu phải có ít nhất 2 ký tự");
                 return;
             }
 
             if (editTrain.trainName.trim().length > 50) {
-                alert("Train name cannot exceed 50 characters");
+                alert("Tên tàu không được vượt quá 50 ký tự");
                 return;
             }
 
             if (!editTrain.trainModel?.trim()) {
-                alert("Train model is required");
+                alert("Mẫu tàu là bắt buộc");
                 return;
             }
 
             if (editTrain.trainModel.trim().length < 2) {
-                alert("Train model must be at least 2 characters long");
+                alert("Mẫu tàu phải có ít nhất 2 ký tự");
                 return;
             }
 
             if (editTrain.trainModel.trim().length > 50) {
-                alert("Train model cannot exceed 50 characters");
+                alert("Mẫu tàu không được vượt quá 50 ký tự");
                 return;
             }
 
             if (editTrain.trainManufacturer && editTrain.trainManufacturer.trim().length > 100) {
-                alert("Train manufacturer cannot exceed 100 characters");
+                alert("Nhà sản xuất tàu không được vượt quá 100 ký tự");
                 return;
             }
 
@@ -168,7 +168,7 @@ const AdminTrainManager = () => {
                         await axiosInstance.put(`/trains/${response.data.data.trainId}${routeParam}`, payload);
                     } catch (routeError) {
                         console.warn("Train created but route assignment failed:", routeError);
-                        alert("Train created successfully, but route assignment failed. You can edit the train to assign a route.");
+                        alert("Tàu đã được tạo thành công, nhưng việc gán tuyến thất bại. Bạn có thể chỉnh sửa tàu để gán tuyến.");
                     }
                 }
             }
@@ -185,19 +185,19 @@ const AdminTrainManager = () => {
                 config: error.config
             });
             const errorMessage = error.response?.data?.message || error.message;
-            alert(`Failed to save train: ${errorMessage}`);
+            alert(`Không thể lưu tàu: ${errorMessage}`);
         }
     };
 
     // Handle delete
     const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this train?")) {
+        if (window.confirm("Bạn có chắc chắn muốn xóa tàu này không?")) {
             try {
                 await axiosInstance.delete(`/trains/${id}`);
                 setTrains((prev) => prev.filter((t) => t.trainId !== id));
             } catch (error) {
                 console.error("Failed to delete train:", error);
-                alert(`Failed to delete train: ${error.response?.data?.message || error.message}`);
+                alert(`Không thể xóa tàu: ${error.response?.data?.message || error.message}`);
             }
         }
     };
@@ -229,8 +229,8 @@ const AdminTrainManager = () => {
             {/* Page Header */}
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2 className="h3 mb-1 text-dark fw-bold">Train Management</h2>
-                    <p className="text-muted mb-0">Manage trains and their route assignments</p>
+                    <h2 className="h3 mb-1 text-dark fw-bold">Quản Lý Tàu</h2>
+                    <p className="text-muted mb-0">Quản lý tàu và phân công tuyến</p>
                 </div>
                 <button
                     onClick={() => handleEditOrAdd()}
@@ -240,7 +240,7 @@ const AdminTrainManager = () => {
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                     </svg>
-                    Add Train
+                    Thêm Tàu
                 </button>
             </div>
 
@@ -251,7 +251,7 @@ const AdminTrainManager = () => {
                         <div className="card-body p-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Total Trains</p>
+                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Tổng Số Tàu</p>
                                     <h3 className="mb-0 fw-bold text-dark">{totalTrains}</h3>
                                 </div>
                                 <div className="bg-primary bg-opacity-10 p-3 rounded-3">
@@ -269,7 +269,7 @@ const AdminTrainManager = () => {
                         <div className="card-body p-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Active Trains</p>
+                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Tàu Hoạt Động</p>
                                     <h3 className="mb-0 fw-bold text-success">{activeTrains}</h3>
                                 </div>
                                 <div className="bg-success bg-opacity-10 p-3 rounded-3">
@@ -287,7 +287,7 @@ const AdminTrainManager = () => {
                         <div className="card-body p-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Unassigned</p>
+                                    <p className="text-muted mb-1 small text-uppercase fw-medium">Chưa Phân Công</p>
                                     <h3 className="mb-0 fw-bold text-warning">{unassignedTrains}</h3>
                                 </div>
                                 <div className="bg-warning bg-opacity-10 p-3 rounded-3">
@@ -305,10 +305,10 @@ const AdminTrainManager = () => {
             <div className="card border-0 shadow-sm" style={{ borderRadius: "12px" }}>
                 <div className="card-header bg-white border-0 p-4" style={{ borderRadius: "12px 12px 0 0" }}>
                     <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="mb-0 fw-semibold">Train List</h5>
+                        <h5 className="mb-0 fw-semibold">Danh Sách Tàu</h5>
                         {selectedTrains.length > 0 && (
                             <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
-                                {selectedTrains.length} selected
+                                {selectedTrains.length} đã chọn
                             </span>
                         )}
                     </div>
@@ -318,7 +318,7 @@ const AdminTrainManager = () => {
                     {loading ? (
                         <div className="text-center p-5">
                             <div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                                <span className="visually-hidden">Đang tải...</span>
                             </div>
                         </div>
                     ) : (
@@ -334,11 +334,11 @@ const AdminTrainManager = () => {
                                                 className="form-check-input"
                                             />
                                         </th>
-                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Train Name</th>
-                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Model</th>
-                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Route</th>
-                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Status</th>
-                                        <th className="border-0 px-4 py-3 fw-semibold text-dark text-end">Actions</th>
+                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Tên Tàu</th>
+                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Mẫu</th>
+                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Tuyến</th>
+                                        <th className="border-0 px-4 py-3 fw-semibold text-dark">Trạng Thái</th>
+                                        <th className="border-0 px-4 py-3 fw-semibold text-dark text-end">Hành Động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -380,7 +380,7 @@ const AdminTrainManager = () => {
                                                         </small>
                                                     </div>
                                                 ) : (
-                                                    <span className="text-muted fst-italic">Not assigned</span>
+                                                    <span className="text-muted fst-italic">Chưa phân công</span>
                                                 )}
                                             </td>
                                             <td className="px-4 py-3">
@@ -390,7 +390,7 @@ const AdminTrainManager = () => {
                                                         : "bg-warning bg-opacity-10 text-warning"
                                                         }`}
                                                 >
-                                                    {train.route ? "Active" : "Unassigned"}
+                                                    {train.route ? "Hoạt động" : "Chưa phân công"}
                                                 </span>
                                             </td>
                                             <td className="px-4 py-3 text-end">
@@ -398,7 +398,7 @@ const AdminTrainManager = () => {
                                                     <button
                                                         onClick={() => handleEditOrAdd(train)}
                                                         className="btn btn-sm btn-outline-primary border-0"
-                                                        title="Edit train"
+                                                        title="Chỉnh sửa tàu"
                                                     >
                                                         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 8.207l-3-3L12.146.146zM11.207 9l-3-3L2.5 11.707V14.5a.5.5 0 0 0 .5.5h2.793L11.207 9z" />
@@ -407,7 +407,7 @@ const AdminTrainManager = () => {
                                                     <button
                                                         onClick={() => handleDelete(train.trainId)}
                                                         className="btn btn-sm btn-outline-danger border-0"
-                                                        title="Delete train"
+                                                        title="Xóa tàu"
                                                     >
                                                         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -429,9 +429,9 @@ const AdminTrainManager = () => {
                     {/* Pagination */}
                     <div className="px-4 py-3 border-top bg-light d-flex justify-content-between align-items-center">
                         <small className="text-muted">
-                            Showing 1-{trains.length} of {trains.length} trains
+                            Hiển thị 1-{trains.length} trong số {trains.length} tàu
                         </small>
-                        <small className="text-muted">Rows per page: 10</small>
+                        <small className="text-muted">Số hàng mỗi trang: 10</small>
                     </div>
                 </div>
             </div>
@@ -443,7 +443,7 @@ const AdminTrainManager = () => {
                         <div className="modal-content border-0 shadow-lg" style={{ borderRadius: "12px" }}>
                             <div className="modal-header border-0 pb-0">
                                 <h5 className="modal-title fw-bold">
-                                    {editTrain?.trainId ? "Edit Train" : "Add New Train"}
+                                    {editTrain?.trainId ? "Chỉnh Sửa Tàu" : "Thêm Tàu Mới"}
                                 </h5>
                                 <button
                                     type="button"
@@ -458,55 +458,55 @@ const AdminTrainManager = () => {
                             <div className="modal-body p-4">
                                 <div className="row g-3">
                                     <div className="col-md-6">
-                                        <label className="form-label fw-semibold">Train Name *</label>
+                                        <label className="form-label fw-semibold">Tên Tàu *</label>
                                         <input
                                             type="text"
                                             value={editTrain?.trainName || ""}
                                             onChange={(e) =>
                                                 setEditTrain({ ...editTrain, trainName: e.target.value })
                                             }
-                                            placeholder="Enter train name"
+                                            placeholder="Nhập tên tàu"
                                             className="form-control"
                                             style={{ borderRadius: "8px" }}
                                             maxLength={50}
                                             required
                                         />
-                                        <small className="text-muted">2-50 characters</small>
+                                        <small className="text-muted">2-50 ký tự</small>
                                     </div>
                                     <div className="col-md-6">
-                                        <label className="form-label fw-semibold">Train Model *</label>
+                                        <label className="form-label fw-semibold">Mẫu Tàu *</label>
                                         <input
                                             type="text"
                                             value={editTrain?.trainModel || ""}
                                             onChange={(e) =>
                                                 setEditTrain({ ...editTrain, trainModel: e.target.value })
                                             }
-                                            placeholder="Enter train model"
+                                            placeholder="Nhập mẫu tàu"
                                             className="form-control"
                                             style={{ borderRadius: "8px" }}
                                             maxLength={50}
                                             required
                                         />
-                                        <small className="text-muted">2-50 characters</small>
+                                        <small className="text-muted">2-50 ký tự</small>
                                     </div>
                                     <div className="col-12">
-                                        <label className="form-label fw-semibold">Train Manufacturer</label>
+                                        <label className="form-label fw-semibold">Nhà Sản Xuất</label>
                                         <input
                                             type="text"
                                             value={editTrain?.trainManufacturer || ""}
                                             onChange={(e) =>
                                                 setEditTrain({ ...editTrain, trainManufacturer: e.target.value })
                                             }
-                                            placeholder="Enter train manufacturer (optional)"
+                                            placeholder="Nhập nhà sản xuất (tùy chọn)"
                                             className="form-control"
                                             style={{ borderRadius: "8px" }}
                                             maxLength={100}
                                         />
-                                        <small className="text-muted">Optional, max 100 characters</small>
+                                        <small className="text-muted">Tùy chọn, tối đa 100 ký tự</small>
                                     </div>
                                     <div className="col-12">
                                         <label className="form-label fw-semibold">
-                                            Route Assignment
+                                            Phân Công Tuyến
                                         </label>
                                         <select
                                             value={editTrain?.route?.id || ""}
@@ -524,7 +524,7 @@ const AdminTrainManager = () => {
                                             required={false}
                                         >
                                             <option value="">
-                                                Select a route (optional)
+                                                Chọn tuyến (tùy chọn)
                                             </option>
                                             {routes.map((route) => (
                                                 <option key={route.id} value={route.id}>
@@ -533,7 +533,7 @@ const AdminTrainManager = () => {
                                             ))}
                                         </select>
                                         <small className="text-muted">
-                                            Leave empty if not assigning to a route yet
+                                            Để trống nếu chưa phân công tuyến
                                         </small>
                                     </div>
                                 </div>
@@ -549,7 +549,7 @@ const AdminTrainManager = () => {
                                     }}
                                     style={{ borderRadius: "8px" }}
                                 >
-                                    Cancel
+                                    Hủy
                                 </button>
                                 <button
                                     type="button"
@@ -557,7 +557,7 @@ const AdminTrainManager = () => {
                                     onClick={handleSave}
                                     style={{ borderRadius: "8px" }}
                                 >
-                                    {editTrain?.trainId ? "Update Train" : "Add Train"}
+                                    {editTrain?.trainId ? "Cập Nhật Tàu" : "Thêm Tàu"}
                                 </button>
                             </div>
                         </div>
