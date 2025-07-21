@@ -41,8 +41,7 @@ const SignUp = () => {
     try {
       // Only sending email to get OTP at this point
       const response = await axios.post(
-<<<<<<< HEAD
-        `http://localhost:8080/api/v1/security/register?mail=${encodeURIComponent(email)}`,
+        `https://summer2025-sba301-group3.onrender.com/api/v1/security/register?mail=${encodeURIComponent(email)}`,
         null,
         {
           headers: { 'Content-Type': 'application/json' },
@@ -50,16 +49,6 @@ const SignUp = () => {
         }
       );
 
-=======
-         'https://summer2025-sba301-group3.onrender.com/api/v1/security/register',
-         JSON.stringify(email),
-         {
-           headers: { 'Content-Type': 'application/json' },
-           withCredentials: true
-         }
-       );
-      
->>>>>>> 5ac96d937c32d2c49f9eb3c65b8f7a5d2e48fe2c
       if (response.data.status === 200) {
         setSuccess('OTP sent to your email. Please check and enter below.');
         setStep(2);
@@ -102,25 +91,14 @@ const SignUp = () => {
       };
 
       // Send verification request with OTP
-<<<<<<< HEAD
       const response = await axios.post(
-        `http://localhost:8080/api/v1/security/verify?otp=${otp}`,
+        `https://summer2025-sba301-group3.onrender.com/api/v1/security/verify?otp=${otp}`,
         signupData,
         { headers: { 'Content-Type': 'application/json' } }
       );
 
       if (response.data.status === 201 || response.data.status === 200) {
         setSuccess('Registration successful! You can now login with your account.');
-=======
-     const response = await axios.post(
-       `https://summer2025-sba301-group3.onrender.com/api/v1/security/verify?otp=${otp}`,
-       signupData,
-       { headers: { 'Content-Type': 'application/json' } }
-     );
-      
-      if (response.data.status === 200) {
-        setSuccess('Registration successful! Redirecting to login...');
->>>>>>> 5ac96d937c32d2c49f9eb3c65b8f7a5d2e48fe2c
         setTimeout(() => {
           navigate('/login');
         }, 1500);
@@ -264,9 +242,9 @@ const SignUp = () => {
                   </Form>
                 )}
 
-                
 
-                
+
+
               </Card.Body>
             </Card>
           </Col>
