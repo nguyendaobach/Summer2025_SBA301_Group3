@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0581568-82f0-4e94-9416-ad23f39567dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a0581568-82f0-4e94-9416-ad23f39567dc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +54,7 @@
     "Spring Boot.MetroSystemApplication.executor": "Run",
     "git-widget-placeholder": "metro-be",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/nguye/OneDrive/Desktop/Metro-system/Summer2025_SBA301_Group3/metro-system",
+    "last_opened_file_path": "C:/Users/nguye/OneDrive/Desktop/Metro-system/Summer2025_SBA301_Group3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -148,6 +146,7 @@
       <workItem from="1753059248885" duration="2126000" />
       <workItem from="1753061517639" duration="14000" />
       <workItem from="1753061553436" duration="9000" />
+      <workItem from="1753282975479" duration="10000" />
     </task>
     <servers />
   </component>

@@ -161,7 +161,7 @@ public class UserService implements IUserService {
         account.setEmail(user.getEmail());
         account.setFullname(user.getFullname());
         account.setStatus(user.getStatus());
-        account.setRole(user.getRole());
+
         Account updatedAccount = userRepository.save(account);
 
         return userMapper.toResponseDto(updatedAccount);
