@@ -44,7 +44,7 @@ const SignUp = () => {
 
       // Only sending email to get OTP at this point
       const response = await axios.post(
-        `https://summer2025-sba301-group3.onrender.com/api/v1/security/register?mail=${encodeURIComponent(email)}`,
+        `http://localhost:8080/api/v1/security/register?mail=${encodeURIComponent(email)}`,
         null,
         {
           headers: { 'Content-Type': 'application/json' },
@@ -100,7 +100,7 @@ const SignUp = () => {
 
       // Send verification request with OTP
       const response = await axios.post(
-        `https://summer2025-sba301-group3.onrender.com/api/v1/security/verify?otp=${otp}`,
+        `http://localhost:8080/api/v1/security/verify?otp=${otp}`,
         signupData,
         { headers: { 'Content-Type': 'application/json' } }
       );

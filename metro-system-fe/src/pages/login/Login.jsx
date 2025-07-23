@@ -19,7 +19,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://summer2025-sba301-group3.onrender.com/api/v1/security/login', {
+      const response = await axios.post('http://localhost:8080/api/v1/security/login', {
         email: email,
         password: password
       });
@@ -121,7 +121,7 @@ const Login = () => {
                     {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                   </Button>
 
-                  
+
                 </Form>
               </Card.Body>
             </Card>

@@ -636,7 +636,7 @@ const CustomerManagement = () => {
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                <div>
+                {/* <div>
                   <label style={{ display: "block", fontWeight: "500", color: "#374151", marginBottom: "8px" }}>
                     Vai trò
                   </label>
@@ -654,7 +654,7 @@ const CustomerManagement = () => {
                     <option value="ADMIN">Quản trị viên</option>
                     <option value="CUSTOMER">Khách hàng</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div>
                   <label style={{ display: "block", fontWeight: "500", color: "#374151", marginBottom: "8px" }}>
